@@ -181,14 +181,14 @@ export default function SalesModal({ products, onClose }: SalesModalProps) {
                       {paymentMethod.replace('_', ' ')} Number
                     </label>
                     <input
-                      type="tel"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      placeholder="0551234567"
-                      className="w-full px-3 py-2 border rounded-md"
-                      pattern="[0-9]{10}"
-                      required={paymentMethod !== 'CASH'}
-                    />
+                        type="tel"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        placeholder="0551234567"
+                        className="w-full px-3 py-2 border rounded-md"
+                        pattern="[0-9]{10}"
+                        required={!['CASH', 'VODAFONE_CASH'].includes(paymentMethod)} 
+/>
                   </div>
                 )}
               </div>
