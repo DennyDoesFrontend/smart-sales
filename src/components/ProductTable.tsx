@@ -82,7 +82,6 @@ export default function ProductTable() {
         </table>
       </div>
 
-      {/* MODAL COMPONENT (NEW CODE) - Add at the bottom of your JSX */}
       {isModalOpen && (
         <ProductModal
           product={editingProduct}

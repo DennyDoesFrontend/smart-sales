@@ -17,8 +17,8 @@ type ProductStore = {
 
 export const useProductStore = create<ProductStore>((set) => ({
   products: [
-    { id: '1', name: 'Wireless Mouse', category: 'Electronics', price: 24.99, stock: 42 },
-    { id: '2', name: 'Mechanical Keyboard', category: 'Electronics', price: 89.99, stock: 15 },
+    { id: '1', name: 'Fried Rice with Meat', category: 'Continental', price: 24.99, stock: 42 },
+    { id: '2', name: 'Waakye and Fish', category: 'Local', price: 89.99, stock: 15 },
   ],
   addProduct: (product) => 
     set((state) => ({
