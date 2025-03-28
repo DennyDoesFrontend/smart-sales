@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { FiX } from 'react-icons/fi'
 import { useSalesStore } from '../stores/useSaleStore'
 import { useProductStore } from '../stores/useProductStore'
-import { printReceipt } from '../utils/PrintReceipt'
+import { printReceipt } from '../utils/PrintUtils'
 import { v4 as uuidv4 } from 'uuid';
 
 type PaymentMethod = 'MTN_MOMO' | 'AIRTELTIGO_CASH' | 'VODAFONE_CASH' | 'CASH'
