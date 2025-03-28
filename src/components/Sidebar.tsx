@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { FiPackage, FiShoppingCart, FiHome } from 'react-icons/fi'
+import { FaShoppingBag } from "react-icons/fa";
 
 export default function Sidebar() {
   return (
@@ -34,6 +35,13 @@ export default function Sidebar() {
             >
               <FiShoppingCart className="mr-3" />
               Sales
+            </Link>
+            <Link 
+              to="/kitchen-orders" 
+              className="flex items-center p-2 rounded-lg hover:bg-gray-100"
+            >
+              <FaShoppingBag className='mr-3' />
+              Orders
             </Link>
           </li>
         </ul>

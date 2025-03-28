@@ -1,4 +1,4 @@
-import { FiTrendingUp, FiDollarSign, FiCreditCard, FiSmartphone } from 'react-icons/fi'
+import { FiTrendingUp, FiDollarSign, FiSmartphone } from 'react-icons/fi'
 
 type StatCardProps = {
   title: string

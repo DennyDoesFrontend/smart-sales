@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { FiX } from 'react-icons/fi'
 import { useSalesStore } from '../stores/useSaleStore'
 import { useProductStore } from '../stores/useProductStore'
+import { printReceipt } from '../utils/PrintReceipt'
+import { v4 as uuidv4 } from 'uuid';
 
 type PaymentMethod = 'MTN_MOMO' | 'AIRTELTIGO_CASH' | 'VODAFONE_CASH' | 'CASH'
 
@@ -16,23 +18,31 @@ type SalesModalProps = {
 }
 
 export default function SalesModal({ products, onClose }: SalesModalProps) {
+  // State declarations
   const [selectedProductId, setSelectedProductId] = useState('')
   const [quantity, setQuantity] = useState(1)
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('CASH')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [showPaymentForm, setShowPaymentForm] = useState(false)
+  const [isPrinting, setIsPrinting] = useState(false)
   
+  // Store hooks
   const { addSale } = useSalesStore()
-  const { products: allProducts, updateProduct } = useProductStore()
+  const { updateProduct } = useProductStore()
 
+  // Find selected product
   const selectedProduct = products.find(p => p.id === selectedProductId)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Form submission handler
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!selectedProduct) return
 
-    // Record sale with payment information
-    addSale({
+    setIsPrinting(true)
+    
+    try {
+      const newSale = {
+        id: uuidv4(),
         productId: selectedProduct.id,
         productName: selectedProduct.name,
         quantity,
@@ -41,14 +51,17 @@ export default function SalesModal({ products, onClose }: SalesModalProps) {
         paymentMethod,
         phoneNumber: paymentMethod !== 'CASH' ? phoneNumber : undefined,
         isCompleted: false
-    })
+      }
 
-    // Update inventory
-    updateProduct(selectedProduct.id, {
-      stock: selectedProduct.stock - quantity
-    })
-
-    onClose()
+      addSale(newSale)
+      updateProduct(selectedProduct.id, { stock: selectedProduct.stock - quantity })
+      printReceipt(newSale)
+      onClose()
+    } catch (error) {
+      console.error('Error completing sale:', error)
+    } finally {
+      setIsPrinting(false)
+    }
   }
 
   return (
@@ -56,7 +69,11 @@ export default function SalesModal({ products, onClose }: SalesModalProps) {
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
         <div className="flex justify-between items-center border-b p-4">
           <h3 className="text-lg font-semibold">Record New Sale</h3>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+          <button 
+            onClick={onClose} 
+            className="text-gray-500 hover:text-gray-700"
+            disabled={isPrinting}
+          >
             <FiX size={24} />
           </button>
         </div>
@@ -181,14 +198,26 @@ export default function SalesModal({ products, onClose }: SalesModalProps) {
                   type="button"
                   onClick={() => setShowPaymentForm(false)}
                   className="px-4 py-2 border border-gray-300 rounded-md"
+                  disabled={isPrinting}
                 >
                   Back
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                  className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center justify-center"
+                  disabled={isPrinting}
                 >
-                  Complete Sale
+                  {isPrinting ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Processing...
+                    </>
+                  ) : (
+                    'Complete Sale & Print Receipt'
+                  )}
                 </button>
               </div>
             </>
