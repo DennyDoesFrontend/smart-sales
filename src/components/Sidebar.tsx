@@ -1,51 +1,87 @@
-import { Link } from 'react-router-dom'
-import { FiPackage, FiShoppingCart, FiHome } from 'react-icons/fi'
-import { FaShoppingBag } from "react-icons/fa";
+import { NavLink } from 'react-router-dom';
 
 export default function Sidebar() {
   return (
-    <div className="w-64 bg-white shadow-md">
-      <div className="p-4 border-b">
-        <h1 className="text-xl font-bold">Inventory Tracker</h1>
+    <div className="w-auto bg-[#1F1D2B] shadow-md">
+      <div className='w-full flex justify-center mt-4 mb-12'>
+        <img src='/Logo.svg' alt="Logo" />
       </div>
       <nav className="p-4">
-        <ul className="space-y-2">
-          <li>
-            <Link 
-              to="/" 
-              className="flex items-center p-2 rounded-lg hover:bg-gray-100"
+        <ul className="space-y-10">
+          <li className='w-full flex justify-center'>
+            <NavLink
+              to="/"
+              className={({ isActive }) => 
+                `w-3/4 flex items-center justify-center p-2 rounded-lg ${
+                  isActive ? 'bg-[#EA7C69]' : 'hover:bg-[#2D303E]'
+                }`
+              }
             >
-              <FiHome className="mr-3" />
-              Dashboard
-            </Link>
+              {({ isActive }) => (
+                <img 
+                  src='/Home.svg' 
+                  className={`w-[40px] ${isActive ? 'filter brightness-0 invert' : ''}`}
+                  alt="Home"
+                />
+              )}
+            </NavLink>
           </li>
-          <li>
-            <Link 
-              to="/products" 
-              className="flex items-center p-2 rounded-lg hover:bg-gray-100"
+          <li className='w-full flex justify-center'>
+            <NavLink
+              to="/products"
+              className={({ isActive }) => 
+                `w-3/4 flex items-center justify-center p-2 rounded-lg ${
+                  isActive ? 'bg-[#EA7C69]' : 'hover:bg-[#2D303E]'
+                }`
+              }
             >
-              <FiPackage className="mr-3" />
-              Products
-            </Link>
+              {({ isActive }) => (
+                <img 
+                  src='/Food.svg' 
+                  className={`w-[40px] ${isActive ? 'filter brightness-0 invert' : ''}`}
+                  alt="Products"
+                />
+              )}
+            </NavLink>
           </li>
-          <li>
-            <Link 
-              to="/sales" 
-              className="flex items-center p-2 rounded-lg hover:bg-gray-100"
+          <li className='w-full flex justify-center'>
+            <NavLink
+              to="/sales"
+              className={({ isActive }) => 
+                `w-3/4 flex items-center justify-center p-2 rounded-lg ${
+                  isActive ? 'bg-[#EA7C69]' : 'hover:bg-[#2D303E]'
+                }`
+              }
             >
-              <FiShoppingCart className="mr-3" />
-              Sales
-            </Link>
-            <Link 
-              to="/kitchen-orders" 
-              className="flex items-center p-2 rounded-lg hover:bg-gray-100"
+              {({ isActive }) => (
+                <img 
+                  src='/Sales.svg' 
+                  className={`w-[40px] ${isActive ? 'filter brightness-0 invert' : ''}`}
+                  alt="Sales"
+                />
+              )}
+            </NavLink>
+          </li>
+          <li className='w-full flex justify-center'>
+            <NavLink
+              to="/kitchen-orders"
+              className={({ isActive }) => 
+                `w-3/4 flex items-center justify-center p-2 rounded-lg ${
+                  isActive ? 'bg-[#EA7C69]' : 'hover:bg-[#2D303E]'
+                }`
+              }
             >
-              <FaShoppingBag className='mr-3' />
-              Orders
-            </Link>
+              {({ isActive }) => (
+                <img 
+                  src='/Orders.svg' 
+                  className={`w-[40px] ${isActive ? 'filter brightness-0 invert' : ''}`}
+                  alt="Kitchen Orders"
+                />
+              )}
+            </NavLink>
           </li>
         </ul>
       </nav>
     </div>
-  )
+  );
 }
