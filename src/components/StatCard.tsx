@@ -17,11 +17,11 @@ export default function StatCard({ title, value, icon }: StatCardProps) {
   }
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow border">
+    <div className="bg-[#1F1D2B] p-4 rounded-lg shadow border">
       <div className="flex justify-between items-start">
         <div>
-          <p className="text-sm font-medium text-gray-500">{title}</p>
-          <p className="text-2xl font-bold mt-1">{value}</p>
+          <p className="text-sm font-medium text-[#EA7C69]">{title}</p>
+          <p className="text-2xl text-white font-bold mt-1">{value}</p>
         </div>
         <div className="p-2 rounded-full bg-gray-100">
           {getIcon()}

@@ -9,6 +9,7 @@ export type Sale = {
   quantity: number;
   price: number;
   date: string;
+  customerName?: string;
   paymentMethod: PaymentMethod;
   phoneNumber?: string;
   isCompleted: boolean;
@@ -33,9 +34,11 @@ export const useSalesStore = create<SalesStore>((set) => ({
       productName: 'Jollof Rice',
       quantity: 2,
       price: 25.00,
+      customerName: "Denzel Minsworth",
       date: new Date().toISOString(),
       paymentMethod: 'CASH',
-      isCompleted: false
+      isCompleted: false,
+      notes: "I want it hot and spicy"
     },
     {
       id: '2',
@@ -43,10 +46,25 @@ export const useSalesStore = create<SalesStore>((set) => ({
       productName: 'Banku with Tilapia',
       quantity: 1,
       price: 45.00,
+      customerName: "Enoch Mentis",
       date: new Date().toISOString(),
       paymentMethod: 'MTN_MOMO',
       phoneNumber: '0551234567',
-      isCompleted: false
+      isCompleted: false,
+      notes: "I want the person serving to be fat"
+    },
+    {
+      id: '3',
+      productId: '3',
+      productName: 'assorted fried rice',
+      quantity: 1,
+      price: 45.00,
+      customerName: "James Bond",
+      date: new Date().toISOString(),
+      paymentMethod: 'MTN_MOMO',
+      phoneNumber: '0551234567',
+      isCompleted: false,
+      notes: "I want a lot of shito please"
     }
   ],
   

@@ -15,6 +15,7 @@ export const printReceipt = (sale: Sale) => {
         .divider { border-top: 1px dashed #000; margin: 10px 0; }
         .row { display: flex; justify-content: space-between; margin: 5px 0; }
         .footer { margin-top: 15px; text-align: center; font-size: 12px; }
+        .customer-name { margin: 8px 0; font-weight: bold; }
       </style>
     </head>
     <body>
@@ -22,6 +23,8 @@ export const printReceipt = (sale: Sale) => {
         <div class="title">YOUR BUSINESS NAME</div>
         <div>${new Date(sale.date).toLocaleString()}</div>
       </div>
+      
+      ${sale.customerName ? `<div class="customer-name">Customer: ${sale.customerName}</div>` : ''}
       
       <div class="divider"></div>
       

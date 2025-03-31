@@ -23,6 +23,7 @@ export default function SalesModal({ products, onClose }: SalesModalProps) {
   const [quantity, setQuantity] = useState(1)
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('CASH')
   const [phoneNumber, setPhoneNumber] = useState('')
+  const [customerName, setCustomerName] = useState('') // New state for customer name
   const [showPaymentForm, setShowPaymentForm] = useState(false)
   const [isPrinting, setIsPrinting] = useState(false)
   
@@ -49,6 +50,7 @@ export default function SalesModal({ products, onClose }: SalesModalProps) {
         price: selectedProduct.price,
         date: new Date().toISOString(),
         paymentMethod,
+        customerName: customerName || 'Walk-in Customer', // Default if empty
         phoneNumber: paymentMethod !== 'CASH' ? phoneNumber : undefined,
         isCompleted: false
       }
@@ -81,6 +83,17 @@ export default function SalesModal({ products, onClose }: SalesModalProps) {
         <form onSubmit={handleSubmit} className="p-4 space-y-4">
           {!showPaymentForm ? (
             <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name (Optional)</label>
+                <input
+                  type="text"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  placeholder="Enter customer name"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                />
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Product</label>
                 <select
@@ -143,6 +156,10 @@ export default function SalesModal({ products, onClose }: SalesModalProps) {
           ) : (
             <>
               <div className="space-y-4">
+                <div>
+                  <p className="font-medium">Customer: {customerName || 'Walk-in Customer'}</p>
+                </div>
+                
                 <h4 className="font-medium">Payment Method</h4>
                 <div className="grid grid-cols-2 gap-3">
                   <button
@@ -181,14 +198,14 @@ export default function SalesModal({ products, onClose }: SalesModalProps) {
                       {paymentMethod.replace('_', ' ')} Number
                     </label>
                     <input
-                        type="tel"
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                        placeholder="0551234567"
-                        className="w-full px-3 py-2 border rounded-md"
-                        pattern="[0-9]{10}"
-                        required={!['CASH', 'VODAFONE_CASH'].includes(paymentMethod)} 
-/>
+                      type="tel"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      placeholder="0551234567"
+                      className="w-full px-3 py-2 border rounded-md"
+                      pattern="[0-9]{10}"
+                      required={!['CASH', 'VODAFONE_CASH'].includes(paymentMethod)} 
+                    />
                   </div>
                 )}
               </div>

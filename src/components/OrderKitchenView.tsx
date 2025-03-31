@@ -45,10 +45,10 @@ export default function OrderKitchenView({ expandedView = false }: OrderKitchenV
   };
 
   return (
-    <div className={`${expandedView ? 'space-y-6' : 'space-y-4'}`}>
+    <div className={`${expandedView ? 'space-y-6' : 'space-y-4'} bg-transparent`}>
       {!expandedView && (
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Kitchen Orders</h2>
+          <h2 className="text-xl font-bold"></h2>
           <p className="text-sm text-gray-500">
             {pendingOrders.length} pending {pendingOrders.length === 1 ? 'order' : 'orders'}
           </p>
@@ -76,12 +76,12 @@ export default function OrderKitchenView({ expandedView = false }: OrderKitchenV
               } ${
                 isUrgent 
                   ? 'bg-red-50 border-red-200' 
-                  : 'bg-white border-gray-200'
+                  : 'bg-transparent shadow-md shadow border-1'
               }`}
             >
               <div className="flex justify-between items-start">
                 <div>
-                  <h4 className="font-bold text-lg">
+                  <h4 className="font-bold text-white text-lg">
                     Order #{order.id.slice(0,5)}
                     {isUrgent && (
                       <span className="ml-2 inline-flex items-center text-red-600">
@@ -113,7 +113,7 @@ export default function OrderKitchenView({ expandedView = false }: OrderKitchenV
               </div>
               
               <div className="mt-3">
-                <p className="font-medium">
+                <p className="font-medium text-white">
                   {order.productName} × {order.quantity}
                 </p>
                 <p className="text-gray-700">
@@ -132,7 +132,7 @@ export default function OrderKitchenView({ expandedView = false }: OrderKitchenV
               {expandedView && (
                 <div className="mt-4 pt-4 border-t">
                   <p className="text-sm text-gray-500">
-                    <span className="font-medium">Order ID:</span> {order.id}
+                    <span className="font-medium text-white">Order ID:</span> {order.id}
                   </p>
                   {order.tableNumber && (
                     <p className="text-sm text-gray-500">
@@ -144,10 +144,10 @@ export default function OrderKitchenView({ expandedView = false }: OrderKitchenV
 
               <button 
                 onClick={() => markOrderComplete(order.id)}
-                className={`mt-3 w-full py-2 text-white rounded transition-colors ${
+                className={`mt-3 w-full py-2 text-white font-semibold rounded transition-colors ${
                   isUrgent 
                     ? 'bg-red-600 hover:bg-red-700' 
-                    : 'bg-green-600 hover:bg-green-700'
+                    : 'bg-transparent border-[#EA7C69] border-2 rounded-lg hover:bg-[#EA7C69]'
                 }`}
               >
                 Mark as Completed

@@ -8,7 +8,7 @@ export default function MainLayout() {
       <Sidebar />
       
       {/* Main Content */}
-      <div className="flex-1 overflow-y-auto p-8">
+      <div className="flex-1 overflow-y-auto p-8 bg-[#252836]">
         <Outlet />
       </div>
     </div>
