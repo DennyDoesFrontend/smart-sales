@@ -1,38 +1,94 @@
 import OrderKitchenView from '../components/OrderKitchenView'
-import { FiClock, FiList } from 'react-icons/fi'
+import { FiClock, FiList, FiAlertTriangle, FiCheckCircle } from 'react-icons/fi'
+import { useState, useEffect } from 'react'
 
 export default function KitchenPage() {
+  const [currentTime, setCurrentTime] = useState(new Date())
+  const [urgentOrdersCount, setUrgentOrdersCount] = useState(0)
+  const [completedToday, setCompletedToday] = useState(0)
+
+  // Update time every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date())
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  // Mock data for stats - replace with real data from your store
+  useEffect(() => {
+    // These would normally come from your store/API
+    setUrgentOrdersCount(3)
+    setCompletedToday(24)
+  }, [])
+
   return (
-    <div className="p-6">
-      {/* Page Header */}
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800">Kitchen Orders</h1>
-          <p className="text-gray-500">Real-time order tracking</p>
+    <div className="p-4 sm:p-6">
+      {/* Header with Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        {/* Time Card */}
+        <div className="bg-[#1F1D2B] rounded-xl p-4 border border-[#393C49]">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-sm text-gray-400">Current Time</h2>
+              <p className="text-2xl font-semibold text-white">
+                {currentTime.toLocaleTimeString()}
+              </p>
+            </div>
+            <FiClock className="text-3xl text-[#EA7C69]" />
+          </div>
         </div>
-        <div className="flex items-center space-x-2 text-blue-600">
-          <FiClock className="text-xl" />
-          <span>{new Date().toLocaleTimeString()}</span>
+
+        {/* Urgent Orders Card */}
+        <div className="bg-[#1F1D2B] rounded-xl p-4 border border-[#393C49]">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-sm text-gray-400">Urgent Orders</h2>
+              <p className="text-2xl font-semibold text-white">
+                {urgentOrdersCount}
+              </p>
+            </div>
+            <FiAlertTriangle className="text-3xl text-red-400" />
+          </div>
+        </div>
+
+        {/* Completed Today Card */}
+        <div className="bg-[#1F1D2B] rounded-xl p-4 border border-[#393C49]">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-sm text-gray-400">Completed Today</h2>
+              <p className="text-2xl font-semibold text-white">
+                {completedToday}
+              </p>
+            </div>
+            <FiCheckCircle className="text-3xl text-green-400" />
+          </div>
         </div>
       </div>
 
-      {/* Order Status Tabs */}
-      <div className="flex border-b mb-6">
-        <button className="px-4 py-2 font-medium border-b-2 border-blue-500 text-blue-600">
-          <FiList className="inline mr-2" />
-          Active Orders
-        </button>
-      </div>
+      {/* Main Content */}
+      <div className="bg-[#1F1D2B] rounded-xl shadow-lg overflow-hidden">
+        {/* Orders Header */}
+        <div className="p-4 border-b border-[#393C49] flex justify-between items-center">
+          <div className="flex items-center space-x-2">
+            <FiList className="text-xl text-[#EA7C69]" />
+            <h2 className="text-lg font-semibold text-white">Active Orders</h2>
+          </div>
+          <span className="text-xs text-gray-400">
+            Auto-refreshing...
+          </span>
+        </div>
 
-      {/* Full-screen Order View */}
-      <div className="bg-white rounded-xl shadow p-6">
-        <OrderKitchenView expandedView={true} />
-      </div>
+        {/* Orders Grid */}
+        <div className="p-4">
+          <OrderKitchenView expandedView={true} />
+        </div>
 
-      {/* Kitchen Stats Footer */}
-      <div className="mt-6 text-sm text-gray-500 flex justify-between">
-        <span>Auto-refreshes every 30 seconds</span>
-        <span>Last updated: {new Date().toLocaleTimeString()}</span>
+        {/* Footer */}
+        <div className="p-3 border-t border-[#393C49] text-xs text-gray-400 flex justify-between">
+          <span>Last updated: {currentTime.toLocaleTimeString()}</span>
+          <span>{currentTime.toLocaleDateString()}</span>
+        </div>
       </div>
     </div>
   )
